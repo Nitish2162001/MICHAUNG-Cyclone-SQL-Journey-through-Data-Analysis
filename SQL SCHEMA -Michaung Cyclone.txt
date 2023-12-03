@@ -1,0 +1,17 @@
+CREATE TABLE StormData (
+    DataID INT AUTO_INCREMENT PRIMARY KEY,
+    Time TIMESTAMP,
+    Speed INT,
+    Latitude DECIMAL(8, 6),
+    Longitude DECIMAL(9, 6),
+    Status VARCHAR(20)
+);
+
+INSERT INTO StormData (DataID, Time, Speed, Latitude, Longitude, Status)
+VALUES (1,'2023-12-03 11:30:00', 35, 11.8, 82.7, NULL),
+    (2,'2023-12-03 23:30:00', 45, 12.6, 82.0, NULL),
+    (3,'2023-12-04 11:30:00', 55, 13.5, 81.4, NULL),
+    (4,'2023-12-04 23:30:00', 60, 14.5, 81.1, NULL),
+    (5,'2023-12-05 11:30:00', 50, 15.4, 80.8, NULL),
+    (6,'2023-12-06 11:30:00', 35, 17.0, 81.0, 'dissipating'),
+    (7,'2023-12-07 11:30:00', 20, 18.7, 82.8, 'dissipated');

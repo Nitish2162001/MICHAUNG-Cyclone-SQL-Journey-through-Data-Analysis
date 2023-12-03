@@ -1,0 +1,63 @@
+-- 1.Retrieve all storm data?
+
+SELECT * FROM StormData;
+
+-- 2.Retrieve storm data for a specific date range ?
+
+SELECT * FROM StormData
+WHERE Time BETWEEN '2023-12-03' AND '2023-12-06';
+
+-- 3.Retrieve storm data with speeds greater than 50 knots?
+
+SELECT * FROM StormData
+WHERE Speed > 50;
+
+-- 4.Retrieve storm data for dissipating storms?
+
+SELECT * FROM StormData
+WHERE Status = "dissipating";
+
+-- 5.Calculate the average speed of storms ?
+
+SELECT AVG(Speed) AS AVERAGE_SPEED
+FROM StormData;
+
+-- 6.Find the storm with the highest speed ?
+
+SELECT * FROM StormData
+ORDER BY Speed DESC
+LIMIT 1;
+
+-- 7.Retrieve the earliest and latest storm data entry?
+
+SELECT MIN(Time) AS EarliestTime, MAX(Time) AS LatestTime
+FROM StormData;
+
+-- 8.Retrieve the storm data points with speeds above the average speed ?
+
+SELECT *
+FROM StormData 
+WHERE Speed > ( SELECT AVG(Speed) FROM  StormData);
+
+-- 9. Find storms that experienced an increase in speed for three consecutive data points?
+
+SELECT *
+FROM (
+    SELECT *,
+           LAG(Speed) OVER (ORDER BY Time) AS PrevSpeed,
+           LEAD(Speed) OVER (ORDER BY Time) AS NextSpeed
+    FROM StormData
+) AS SpeedComparison
+WHERE Speed > PrevSpeed AND NextSpeed > Speed;
+
+-- 10.Retrieve the timestamp, speed, and a categorized speed label ('Low Speed', 'Moderate Speed', 'High Speed', or 'Unknown') for each storm data point?
+
+SELECT Time, Speed,
+    CASE
+        WHEN Speed < 40 THEN 'Low Speed'
+        WHEN Speed < 60 THEN 'Moderate Speed'
+        ELSE 'High Speed'
+    END AS SpeedCategory
+FROM StormData;
+
+
